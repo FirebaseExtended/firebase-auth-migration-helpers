@@ -15,7 +15,6 @@ Getting Started
 3. In your Application's or main Activity's `onCreate()` override,
    call `migrate()` to log in any user who was previously logged in with the
    legacy SDK.
-
 ```java
 AuthMigrator.getInstance().migrate()
   .continueWith(new Continuation<AuthResult, Void>() {
@@ -37,7 +36,6 @@ AuthMigrator.getInstance().migrate()
 ```
 4. Whenever you log in a user, call `clearLegacyAuth()`. This is a precaution
    to make sure that a user from a legacy SDK never overrides a newer log in.
-
 ```java
 AuthMigrator.getInstance().clearLegacyAuth();
 ```

@@ -23,6 +23,7 @@ Getting Started
    call `migrateAuth:` to log in any user who was previously logged in with the
    legacy SDK.
 ```objective-c
+// Objective C
 [[FIRAuthMigrator authMigrator] migrate:^(FIRUser *user, NSError *error) {
   if (error != nil) {
     // There was an error.
@@ -52,9 +53,11 @@ FIRAuthMigrator.authMigrator().migrate() { (user, error) in
 4. Whenever you log in a user, call `clearLegacyAuth`. This is a precaution
    to make sure that a user from a legacy SDK never overrides a newer log in.
 ```objective-c
+// Objective C
 [[FIRAuthMigrator authMigrator] clearLegacyAuth];
 ```
 ```swift
+// Swift
 FIRAuthMigrator.authMigrator().clearLegacyAuth()
 ```
 

@@ -10,7 +10,7 @@ Before using this code, you must add the Firebase/Auth modules to your project.
 
 Getting Started
 ---------------
-1. Add the AuthMigrator.java to your project under
+1. Add the `AuthMigrator.java` to your project under
    `src/com/google/firebase/auth/migration`.
 3. In your Application's or main Activity's `onCreate()` override,
    call `migrate()` to log in any user who was previously logged in with the

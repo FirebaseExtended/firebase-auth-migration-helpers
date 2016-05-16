@@ -21,15 +21,21 @@
  * Creates a new FIRAuthMigrator for the given FIRApp.
  */
 + (instancetype _Nonnull)authMigratorWithApp:(FIRApp * _Nonnull)app {
-  FIRAuthMigrator *migrator = [[FIRAuthMigrator alloc] init];
+  return [[FIRAuthMigrator alloc] initWithApp:app];
+}
 
-  // Get the host and namespace for this app.
-  NSURL *databaseURL = [NSURL URLWithString:app.options.databaseURL];
-  migrator->host = databaseURL.host;
-  NSArray *parts = [migrator->host componentsSeparatedByString:@"."];
-  migrator->namespace = parts[0];
-
-  return migrator;
+/**
+ * Initializes a new FIRAuthMigrator for the given FIRApp.
+ */
+- (instancetype _Nonnull)initWithApp:(FIRApp * _Nonnull)app {
+  if (self = [super init]) {
+    // Get the host and namespace for this app.
+    NSURL *databaseURL = [NSURL URLWithString:app.options.databaseURL];
+    self->host = databaseURL.host;
+    NSArray *parts = [self->host componentsSeparatedByString:@"."];
+    self->namespace = parts[0];
+  }
+  return self;
 }
 
 /**
@@ -138,6 +144,7 @@
   NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
   req.HTTPMethod = @"POST";
   req.HTTPBody = body;
+  [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
   NSURLSession *session = [NSURLSession sharedSession];
   [[session dataTaskWithRequest:req
@@ -155,7 +162,8 @@
                   error = [NSError errorWithDomain:FIRAuthErrorDomain
                                               code:FIRAuthErrorCodeInvalidUserToken
                                           userInfo:nil];
-                  BOOL permanent = ((httpResponse.statusCode % 100) == 400);
+                  BOOL permanent = ((httpResponse.statusCode == 400) ||
+                                    (httpResponse.statusCode == 403));
                   callback(nil, permanent, error);
                   return;
                 }

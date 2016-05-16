@@ -8,7 +8,7 @@
 /**
  * Creates a new FIRAuthMigrator for the default FIRApp.
  */
-+ (instancetype _Nonnull)authMigrator;
++ (instancetype _Nonnull)authMigrator NS_SWIFT_NAME(authMigrator());
 
 /**
  * Creates a new FIRAuthMigrator for the given FIRApp.

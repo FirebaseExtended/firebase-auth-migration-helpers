@@ -37,7 +37,7 @@ Getting Started
         }];
    Swift
         // Swift
-        FIRAuthMigrator().migrate() { (user, error) in
+        FIRAuthMigrator.authMigrator().migrate() { (user, error) in
           if error != nil {
             // There was an error.
             return
@@ -55,7 +55,7 @@ Getting Started
         [[FIRAuthMigrator authMigrator] clearLegacyAuth];
 
    Swift
-        FIRAuthMigrator().clearLegacyAuth()
+        FIRAuthMigrator.authMigrator().clearLegacyAuth()
 
 Support
 -------

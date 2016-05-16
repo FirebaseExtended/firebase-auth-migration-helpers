@@ -1,8 +1,8 @@
 FIRAuthMigrator
 ===============
 
-An example Objective-C code sample for migrating logged in users from a legacy
-Firebase iOS SDK to the new Firebase SDK.
+An Objective-C code sample for migrating logged in users from a legacy Firebase
+iOS SDK to the new Firebase SDK.
 
 Pre-requisites
 --------------
@@ -22,40 +22,41 @@ Getting Started
 3. In your AppDelegate's `application:didFinishLaunchingWithOptions:` method,
    call `migrateAuth:` to log in any user who was previously logged in with the
    legacy SDK.
-
-   Objective C
-        [[FIRAuthMigrator authMigrator] migrate:^(FIRUser *user, NSError *error) {
-          if (error != nil) {
-            // There was an error.
-            return;
-          }
-          if (user == nil) {
-            // No user was logged in.
-            return;
-          }
-          // user is logged in
-        }];
-   Swift
-        // Swift
-        FIRAuthMigrator.authMigrator().migrate() { (user, error) in
-          if error != nil {
-            // There was an error.
-            return
-          }
-          if user == nil {
-            // No user was logged in.
-            return
-          }
-          // user is logged in
-        }
+```objective-c
+[[FIRAuthMigrator authMigrator] migrate:^(FIRUser *user, NSError *error) {
+  if (error != nil) {
+    // There was an error.
+    return;
+  }
+  if (user == nil) {
+    // No user was logged in.
+    return;
+  }
+  // user is logged in
+}];
+```
+```swift
+// Swift
+FIRAuthMigrator.authMigrator().migrate() { (user, error) in
+  if error != nil {
+    // There was an error.
+    return
+  }
+  if user == nil {
+    // No user was logged in.
+    return
+  }
+  // user is logged in
+}
+```
 4. Whenever you log in a user, call `clearLegacyAuth`. This is a precaution
    to make sure that a user from a legacy SDK never overrides a newer log in.
-
-   Objective C
-        [[FIRAuthMigrator authMigrator] clearLegacyAuth];
-
-   Swift
-        FIRAuthMigrator.authMigrator().clearLegacyAuth()
+```objective-c
+[[FIRAuthMigrator authMigrator] clearLegacyAuth];
+```
+```swift
+FIRAuthMigrator.authMigrator().clearLegacyAuth()
+```
 
 Support
 -------

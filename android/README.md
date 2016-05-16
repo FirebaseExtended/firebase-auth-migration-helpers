@@ -1,8 +1,8 @@
 FIRAuthMigrator
 ===============
 
-An Android code sample for migrating logged in users from a legacy Firebase iOS
-SDK to the new Firebase SDK.
+An Android code sample for migrating logged in users from a legacy Firebase
+Android SDK to the new Firebase SDK.
 
 Pre-requisites
 --------------

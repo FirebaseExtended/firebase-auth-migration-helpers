@@ -1,5 +1,5 @@
-FIRAuthMigrator
-===============
+Firebase Auth Migrator
+======================
 
 An Android code sample for migrating logged in users from a legacy Firebase
 Android SDK to the new Firebase SDK.

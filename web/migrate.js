@@ -1,9 +1,12 @@
+(function() {
+
 /**
  * Creates a new FirebaseAuthMigrator with the given app.
  */
 var FirebaseAuthMigrator = function(app) {
   var databaseURL = app.options.databaseURL;
   var url = new URL(databaseURL);
+  this.app = app;
   this.namespace = url.host.split('.')[0];
   this.storageKey = "firebase:session::" + this.namespace;
   return this;
@@ -12,16 +15,9 @@ var FirebaseAuthMigrator = function(app) {
 /**
  * Creates a new FirebaseAuthMigrator with the given app.
  */
-firebase.app.prototype.authMigrator = function() {
-  return new FirebaseAuthMigrator(this);
-};
-
-/**
- * Creates a new FirebaseAuthMigrator with the default app.
- */
-firebase.authMigrator = function() {
-  return new FirebaseAuthMigrator(this.app());
-};
+firebase.INTERNAL.registerService("authMigrator", function(app) {
+  return new FirebaseAuthMigrator(app);
+});
 
 /**
  * Returns the legacy Firebase auth token, if present.
@@ -114,10 +110,10 @@ FirebaseAuthMigrator.prototype.exchangeToken = function(token) {
  * Returns a Promise containing the user, or null if there was none logged in.
  */
 FirebaseAuthMigrator.prototype.migrate = function() {
-  if (firebase.auth().currentUser) {
+  if (this.app.auth().currentUser) {
     // There's already a user logged in with the new SDK.
     this.clearLegacyAuth();
-    return Promise.resolve(firebase.auth().currentUser);
+    return Promise.resolve(this.app.auth().currentUser);
   }
 
   var token = this.getLegacyToken();
@@ -127,10 +123,14 @@ FirebaseAuthMigrator.prototype.migrate = function() {
   }
 
   var migrator = this;
-  return this.exchangeToken(token).then(function(newToken) {
-    return firebase.auth().signInWithCustomToken(newToken).then(function(user) {
+  return this.exchangeToken(token)
+    .then(function(newToken) {
+      return migrator.app.auth().signInWithCustomToken(newToken);
+    })
+    .then(function(user) {
       migrator.clearLegacyAuth();
       return user;
     });
-  });
 };
+
+}());

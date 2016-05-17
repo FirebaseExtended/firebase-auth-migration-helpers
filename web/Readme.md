@@ -28,7 +28,11 @@ firebase.authMigrator().migrate().then(function(user) {
 4. Whenever you log in a user, call `clearLegacyAuth`. This is a precaution
    to make sure that a user from a legacy SDK never overrides a newer log in.
 ```javascript
-firebase.authMigrator().clearLegacyAuth();
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    firebase.authMigrator().clearLegacyAuth();
+  });
+});
 ```
 
 Support

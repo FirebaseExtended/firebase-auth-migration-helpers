@@ -31,7 +31,7 @@ firebase.authMigrator().migrate().then(function(user) {
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     firebase.authMigrator().clearLegacyAuth();
-  });
+  };
 });
 ```
 

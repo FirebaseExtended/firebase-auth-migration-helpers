@@ -21,7 +21,7 @@ AuthMigrator.getInstance().migrate()
     @Override
     public Void then(@NonNull Task<AuthResult> task) throws Exception {
       if (task.isSuccessful()) {
-        if (task.getUser() != null) {
+        if (task.getResult().getUser() != null) {
           // Either your existing user remains logged in or a FirebaseUser
           // was created from your legacy Auth state.
         } else {

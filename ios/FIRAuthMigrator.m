@@ -244,6 +244,7 @@
     // Someone's already logged in, so clear the legacy token and keep using the current user.
     [self clearLegacyAuth];
     callback(currentUser, nil);
+    return;
   }
 
   // Get the legacy token out of the keychain.
